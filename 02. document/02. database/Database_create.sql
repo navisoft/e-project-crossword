@@ -5,7 +5,7 @@
 /* Project name:                                                          */
 /* Author:                                                                */
 /* Script type:           Database creation script                        */
-/* Created on:            2011-08-06 23:17                                */
+/* Created on:            2011-08-06 23:20                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -55,7 +55,6 @@ CREATE TABLE [answer4x4] (
     [id] INTEGER IDENTITY(1,1) NOT NULL,
     [puzzleid] INTEGER NOT NULL,
     [questionid] INTEGER NOT NULL,
-    [address] INTEGER NOT NULL,
     [value1] VARCHAR(1) NOT NULL,
     [value2] VARCHAR(1) NOT NULL,
     [value3] VARCHAR(1) NOT NULL,
@@ -72,7 +71,6 @@ CREATE TABLE [answer6x6] (
     [id] INTEGER IDENTITY(1,1) NOT NULL,
     [puzzleid] INTEGER NOT NULL,
     [questionid] INTEGER,
-    [address] VARCHAR(40) NOT NULL,
     [value1] VARCHAR(1) NOT NULL,
     [value2] VARCHAR(1) NOT NULL,
     [value3] VARCHAR(1) NOT NULL,
