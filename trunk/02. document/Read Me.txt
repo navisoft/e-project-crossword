@@ -1,8 +1,10 @@
 Project Crossword
 
 Developped by : Le Dang Son (Team Leader)
-                Vuu Vinh Phuc
+                	Vuu Vinh Phuc
 		Pham Anh Kiet
 		Nguyen Hoang Long
 
 GUI development tool: Eclipse
+
+Program can create database automatically or manually
