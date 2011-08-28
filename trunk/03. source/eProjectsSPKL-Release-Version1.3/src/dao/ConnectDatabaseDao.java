@@ -31,9 +31,9 @@ public class ConnectDatabaseDao {
 		return resultCreateData;  
 	}
 	//Create puzzle table
-	public static boolean createTablePzzule(String data) {
+	public static boolean createTablePzzule() {
 		boolean resultCreateData = false;
-		String sql ="USE "+data+ 
+		String sql =
 		" CREATE TABLE PUZZLE " +
 		"(" +
 		"PUZZLEID INTEGER IDENTITY(1,1)," +
@@ -43,9 +43,9 @@ public class ConnectDatabaseDao {
 		return resultCreateData;
 	}
 	//Create highscores table
-	public static boolean createTableHighScore(String data) {
+	public static boolean createTableHighScore() {
 		boolean resultCreateData = false;
-		String sql ="USE "+data+ 
+		String sql =
 		" CREATE TABLE HIGHSCORES " +
 		"(" +
 		"HIGHSCOREID INTEGER IDENTITY(1,1)," +
@@ -58,9 +58,9 @@ public class ConnectDatabaseDao {
 		return resultCreateData;
 	}
 	//Create user table
-	public static boolean createTableUsers(String data) {
+	public static boolean createTableUsers() {
 		boolean resultCreateData = false;
-		String sql ="USE "+data+ 
+		String sql =
 		" CREATE TABLE USERS " +
 		"(" +
 		"USERID INTEGER IDENTITY(1,1)," +
@@ -71,9 +71,9 @@ public class ConnectDatabaseDao {
 		return resultCreateData;
 	}
 	//Create question table
-	public static boolean createTableQuestions(String data) {
+	public static boolean createTableQuestions() {
 		boolean resultCreateData = false;
-		String sql ="USE "+data+ 
+		String sql = 
 		" CREATE TABLE QUESTIONS " +
 		"(" +
 		"QUESTIONID INTEGER IDENTITY(1,1)," +
@@ -83,9 +83,9 @@ public class ConnectDatabaseDao {
 		return resultCreateData;
 	}
 	//Create answer4x4 table
-	public static boolean createTableAnswer4x4(String data) {
+	public static boolean createTableAnswer4x4() {
 		boolean resultCreateData = false;
-		String sql ="USE "+data+ 
+		String sql =
 		" CREATE TABLE ANSWER4X4 " +
 		"(" +
 		"ANSWER4X4ID INT IDENTITY(1,1)," +
@@ -100,9 +100,9 @@ public class ConnectDatabaseDao {
 		return resultCreateData;
 	}
 	//Create answer6x6 table
-	public static boolean createTableAnswer6x6(String data) {
+	public static boolean createTableAnswer6x6() {
 		boolean resultCreateData = false;
-		String sql ="USE "+data+ 
+		String sql =
 		" CREATE TABLE ANSWER6X6 " +
 		"(" +
 		"ANSWER6X6ID INT IDENTITY(1,1)," +
@@ -121,15 +121,15 @@ public class ConnectDatabaseDao {
 	//Drop database
 	public static boolean dropDatabase(String data) {
 		boolean resultCreateData = false;
-		String sql ="USE MASTER " + 
+		String sql =
 		"DROP DATABASE "+data;
 		resultCreateData = DataUtil.executeNonQuery(sql);
 		return resultCreateData;
 	}
 	//Insert data for table
-	public static boolean createInsertData(String data) {
+	public static boolean createInsertData() {
 		boolean resultCreateData = false;
-		String sql ="USE " + data+
+		String sql =
 		" INSERT INTO PUZZLE VALUES('puzzle1')" +
 		" INSERT INTO PUZZLE VALUES('puzzle2')" +
 		"" +

@@ -15,9 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-
 import util.DataUtil;
-import util.StringUtil;
 import dao.ConnectDatabaseDao;
 
 public class CreateDataView extends JFrame{
@@ -69,33 +67,32 @@ public class CreateDataView extends JFrame{
 						if(result){
 							if(ConnectDatabaseDao.checkExistsDatabases(dataname)){
 								JOptionPane.showMessageDialog(null, "Database "+dataname+" already exists. Input different data name!");
-							}
-							else{
+							}else{
 								boolean resultCreateData = ConnectDatabaseDao.createDatabase(dataname);
 								if(resultCreateData){
 									setServer(hostname,dataname, username, password);
 									result = DataUtil.connect();
 									if(result){
-										setServer(hostname, dataname, username, password);
-										if(ConnectDatabaseDao.createTablePzzule(dataname) 
-											&& ConnectDatabaseDao.createTableHighScore(dataname)
-											&& ConnectDatabaseDao.createTableAnswer4x4(dataname)
-											&& ConnectDatabaseDao.createTableAnswer6x6(dataname)
-											&& ConnectDatabaseDao.createTableQuestions(dataname)
-											&& ConnectDatabaseDao.createTableUsers(dataname)
+										if(ConnectDatabaseDao.createTablePzzule() 
+											&& ConnectDatabaseDao.createTableHighScore()
+											&& ConnectDatabaseDao.createTableAnswer4x4()
+											&& ConnectDatabaseDao.createTableAnswer6x6()
+											&& ConnectDatabaseDao.createTableQuestions()
+											&& ConnectDatabaseDao.createTableUsers()
 										){
 											JOptionPane.showMessageDialog(null, "Create database "+dataname+" successfully!");
 											boolean checkInputData = panel.cbInsertData.isSelected();
 											if(checkInputData){
-												boolean resultInsertData = ConnectDatabaseDao.createInsertData(dataname);
+												boolean resultInsertData = ConnectDatabaseDao.createInsertData();
 												if(resultInsertData){
 													JOptionPane.showMessageDialog(null, "Insert data successfully!");
 													new CreateAdminUserAndPass() .setVisible(true);
 													dispose();
 												}
 												else{
-													JOptionPane.showMessageDialog( null, "Fail!");
+													JOptionPane.showMessageDialog( null, "Insert data fail!");
 													DataUtil.closeConnection();
+													setServer(hostname, "master", username, password);
 													DataUtil.connect();
 													ConnectDatabaseDao.dropDatabase(dataname);
 													setServer("", "", "", "");
@@ -107,25 +104,37 @@ public class CreateDataView extends JFrame{
 											}
 										}
 										else{
-											JOptionPane.showMessageDialog( null, "Fail!");
+											JOptionPane.showMessageDialog( null, "Create database fail. Try again!");
 											DataUtil.closeConnection();
 											setServer(hostname, "master", username, password);
 											DataUtil.connect();
 											ConnectDatabaseDao.dropDatabase(dataname);
 											setServer("", "", "", "");
+											DataUtil.closeConnection();
 										}
+									}else{
+										DataUtil.closeConnection();
+										setServer(hostname, "master", username, password);
+										DataUtil.connect();
+										ConnectDatabaseDao.dropDatabase(dataname);
+										setServer("", "", "", "");
+										DataUtil.closeConnection();
 									}
+								}else{
+									DataUtil.closeConnection();
+									setServer("", "", "", "");
+									DataUtil.closeConnection();
 								}
 							}
 						}else{
 							JOptionPane.showMessageDialog(null, "Hostname,Username or Password not right. Try again!");
+							DataUtil.closeConnection();
 						}
 					}
 					
 				}
 			});
 			panel.btCancel.addActionListener(new ActionListener() {
-				
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					System.exit(0);
@@ -135,7 +144,7 @@ public class CreateDataView extends JFrame{
 	}
 	public void setServer(String hostname,String dataname, String username, String password) {
 		String string = hostname+","+dataname+","+username+","+password;
-		String server = StringUtil.encriptString(string);
+		String server = string;//StringUtil.encriptString(string);
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream("input/server.ser",false);

@@ -24,7 +24,7 @@ public class DataUtil {
 		try {
 			FileReader fr= new FileReader("input/server.ser");
             BufferedReader input= new BufferedReader(fr); 
-            server = StringUtil.decriptString(input.readLine());
+            server = input.readLine();//StringUtil.decriptString(input.readLine());
 			try {
 				if(server!=null && !server.equals("")){
 					String[] array = server.split(",");
@@ -34,10 +34,12 @@ public class DataUtil {
 					model.setPassword(array[3]);
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "Error");
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error 12345");
 			}
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Not found file server! Please configure server!");
 		}
 
@@ -60,6 +62,7 @@ public class DataUtil {
 				result = true;
 			} catch (Exception e) {
 				result = false;
+				e.printStackTrace();
 			}
 		}else{
 			result = false;
@@ -78,8 +81,7 @@ public class DataUtil {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				JOptionPane.showMessageDialog(null, "Error!");
+				e.printStackTrace();
 			}
 		}
 	}
@@ -91,7 +93,6 @@ public class DataUtil {
 			ResultSet rs = statement.executeQuery(sql);
 			return rs;
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			return null;
 		}
@@ -104,6 +105,7 @@ public class DataUtil {
 			return true;
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Update failt! Try again!"+e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 	}
