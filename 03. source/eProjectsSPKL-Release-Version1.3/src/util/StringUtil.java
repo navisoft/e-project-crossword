@@ -12,7 +12,7 @@ public class StringUtil {
 		PBEKeySpec pbeKeySpec;
 		PBEParameterSpec pbeParameterSpec;
 		SecretKeyFactory keyFactory;
-		char[] password = "a".toCharArray();
+		char[] password = "123456".toCharArray();
 		byte[] salt = {(byte)0xc7, (byte)0x73, (byte)0x21, (byte)0x8c, (byte)0x7e, (byte)0xc8, (byte)0xee, (byte)0x99};
 		int count = 20;
 		try {
@@ -25,7 +25,7 @@ public class StringUtil {
 			byte[] plainText = pbeCipher.doFinal(str.getBytes());
 			result = new String(plainText);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return result;
 	}
@@ -34,7 +34,7 @@ public class StringUtil {
 		PBEKeySpec pbeKeySpec;
 		PBEParameterSpec pbeParameterSpec;
 		SecretKeyFactory keyFactory;
-		char[] password = "a".toCharArray();
+		char[] password = "123456".toCharArray();
 		byte[] salt = {(byte)0xc7, (byte)0x73, (byte)0x21, (byte)0x8c, (byte)0x7e, (byte)0xc8, (byte)0xee, (byte)0x99};
 		int count = 20;
 		try {
@@ -47,7 +47,7 @@ public class StringUtil {
 			byte[] plainText = pbeCipher.doFinal(str.getBytes());
 			result = new String(plainText);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return result;
 	}

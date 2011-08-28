@@ -4,7 +4,7 @@ import config.ServerConfig;
 
 public class CorsswordMain {
 	/**
-	 * @param args
+	 * @TP LeeYoungSooon
 	 */
 	public static void main(String[] args) {
 		new ServerConfig();
