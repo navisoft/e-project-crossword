@@ -1,5 +1,5 @@
-import config.ServerConfig;
 
+import config.ServerConfig;
 
 
 public class CorsswordMain {

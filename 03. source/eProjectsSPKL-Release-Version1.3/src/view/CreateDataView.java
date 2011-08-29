@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -16,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import util.DataUtil;
+import util.ServerUtil;
 import dao.ConnectDatabaseDao;
 
 public class CreateDataView extends JFrame{
@@ -54,6 +56,7 @@ public class CreateDataView extends JFrame{
 			panel.btConfig.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					// TODO Auto-generated method stub
+					setCursor(new Cursor(Cursor.WAIT_CURSOR));
 					String hostname = panel.txtHost.getText().trim();
 					String dataname = panel.txtData.getText().trim();
 					String username = panel.txtUser.getText().trim();
@@ -67,6 +70,7 @@ public class CreateDataView extends JFrame{
 						if(result){
 							if(ConnectDatabaseDao.checkExistsDatabases(dataname)){
 								JOptionPane.showMessageDialog(null, "Database "+dataname+" already exists. Input different data name!");
+								setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 							}else{
 								boolean resultCreateData = ConnectDatabaseDao.createDatabase(dataname);
 								if(resultCreateData){
@@ -86,17 +90,19 @@ public class CreateDataView extends JFrame{
 												boolean resultInsertData = ConnectDatabaseDao.createInsertData();
 												if(resultInsertData){
 													JOptionPane.showMessageDialog(null, "Insert data successfully!");
+													setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 													new CreateAdminUserAndPass() .setVisible(true);
 													dispose();
 												}
 												else{
 													JOptionPane.showMessageDialog( null, "Insert data fail!");
-													DataUtil.closeConnection();
 													setServer(hostname, "master", username, password);
 													DataUtil.connect();
-													ConnectDatabaseDao.dropDatabase(dataname);
-													setServer("", "", "", "");
-													DataUtil.closeConnection();
+													if(ConnectDatabaseDao.dropDatabase(dataname)){
+														JOptionPane.showMessageDialog(null, "Drop database successfully0!");
+													}
+													setServer("aaaa", "aaaa", "aaaa", "aaaa");
+													System.exit(1);
 												}
 											}else{
 												new CreateAdminUserAndPass() .setVisible(true);
@@ -105,33 +111,36 @@ public class CreateDataView extends JFrame{
 										}
 										else{
 											JOptionPane.showMessageDialog( null, "Create database fail. Try again!");
-											DataUtil.closeConnection();
 											setServer(hostname, "master", username, password);
 											DataUtil.connect();
-											ConnectDatabaseDao.dropDatabase(dataname);
-											setServer("", "", "", "");
-											DataUtil.closeConnection();
+											if(ConnectDatabaseDao.dropDatabase(dataname)){
+												JOptionPane.showMessageDialog(null, "Drop database successfully1!");
+											}
+											setServer("aaaa", "aaaa", "aaaa", "aaaa");
+											System.exit(1);
 										}
 									}else{
-										DataUtil.closeConnection();
 										setServer(hostname, "master", username, password);
 										DataUtil.connect();
-										ConnectDatabaseDao.dropDatabase(dataname);
-										setServer("", "", "", "");
-										DataUtil.closeConnection();
+										if(ConnectDatabaseDao.dropDatabase(dataname)){
+											JOptionPane.showMessageDialog(null, "Drop database successfully2!");
+										}
+										setServer("aaaa", "aaaa", "aaaa", "aaaa");
+										System.exit(1);
 									}
 								}else{
-									DataUtil.closeConnection();
-									setServer("", "", "", "");
-									DataUtil.closeConnection();
+									setServer("aaaa", "aaaa", "aaaa", "aaaa");
+									System.exit(1);
 								}
 							}
 						}else{
-							JOptionPane.showMessageDialog(null, "Hostname,Username or Password not right. Try again!");
-							DataUtil.closeConnection();
+							setServer("aaaa", "aaaa", "aaaa", "aaaa");
+							JOptionPane.showMessageDialog(null, "Hostname,Username or Password not right.\n " +
+									"Restart program, then reconfig server!");
+							setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+							System.exit(1);	
 						}
-					}
-					
+					}	
 				}
 			});
 			panel.btCancel.addActionListener(new ActionListener() {
@@ -143,16 +152,15 @@ public class CreateDataView extends JFrame{
 			c.add(panel);
 	}
 	public void setServer(String hostname,String dataname, String username, String password) {
-		String string = hostname+","+dataname+","+username+","+password;
-		String server = string;//StringUtil.encriptString(string);
+		String string = hostname+"ithvasolution,"+dataname+"puzzlecrossword,"+username+"tptinhanhvanthe,"+password+"khongbiet";
+		String server = ServerUtil.encryptionStr(string);//StringUtil.encriptString(string);
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream("input/server.ser",false);
-	        PrintWriter pw= new PrintWriter(fos); 
-	        pw.print(server);
+	        PrintWriter pw= new PrintWriter(fos);
+		    pw.print(server);
 	        pw.flush();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

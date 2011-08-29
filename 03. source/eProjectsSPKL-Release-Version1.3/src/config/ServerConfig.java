@@ -26,7 +26,7 @@ public class ServerConfig extends JFrame{
 		ThreadConnectServer threadConnectServer = new ThreadConnectServer();
 		Thread THB = new Thread(threadConnectServer);
 		THB.start();
-		boolean result = DataUtil.connect();//Connect data base
+		boolean result = DataUtil.connect();//Connect database
 		if(result == false){
 			threadConnectServer.dispose();
 			int resultConfig = JOptionPane.showConfirmDialog(null, "Connection failure. Please reconfigure server!");

@@ -20,24 +20,34 @@ public class DataUtil {
 
 	public static ServerModel getServer() {
 		ServerModel model = new ServerModel();
-		String server = null;
+		String server = new String();
 		try {
 			FileReader fr= new FileReader("input/server.ser");
-            BufferedReader input= new BufferedReader(fr); 
-            server = input.readLine();//StringUtil.decriptString(input.readLine());
-			try {
-				if(server!=null && !server.equals("")){
-					String[] array = server.split(",");
-					model.setHostname(array[0]);
-					model.setDataname(array[1]);
-					model.setUsername(array[2]);
-					model.setPassword(array[3]);
+            BufferedReader input= new BufferedReader(fr);
+            if(!fr.ready()){
+            	model.setDataname(null);
+            	model.setHostname(null);
+            	model.setPassword(null);
+            	model.setUsername(null);
+            }else{
+            	server = ServerUtil.deencryptionStr(input.readLine());//StringUtil.decriptString(input.readLine());
+				try {
+					if(server!=null && !server.equals("")){
+						String[] array = server.split(",");
+						String host = array[0].substring(0, array[0].length()-13);;
+						model.setHostname(host);
+						String data = array[1].substring(0, array[1].length()-15);
+						model.setDataname(data);
+						String user = array[2].substring(0, array[2].length()-15);
+						model.setUsername(user);
+						String pass = array[3].substring(0, array[3].length()-9);
+						model.setPassword(pass);
+					}
+				}catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, e.getMessage());
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Error 12345");
-			}
-			
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Not found file server! Please configure server!");
@@ -49,7 +59,7 @@ public class DataUtil {
 		boolean result = false;
 		ServerModel serverModel = new ServerModel();
 		serverModel = getServer();
-		if(serverModel.getDataname()!=null){
+		if(serverModel.getDataname()!=null || serverModel.getHostname()!=null || serverModel.getUsername()!=null || serverModel.getPassword()!=null){
 			String data = "jdbc:sqlserver://"+serverModel.getHostname()+";DATABASENAME= "+serverModel.getDataname();
 			String user = serverModel.getUsername();
 			String pass = serverModel.getPassword();
@@ -62,7 +72,6 @@ public class DataUtil {
 				result = true;
 			} catch (Exception e) {
 				result = false;
-				e.printStackTrace();
 			}
 		}else{
 			result = false;
@@ -76,14 +85,15 @@ public class DataUtil {
 		return conn;
 	}
 
-	public static void closeConnection() {
-		if(conn!=null){
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+	public static boolean closeConnection() {
+		boolean result = false;
+		try {
+			conn.close();
+			result = true;
+		} catch (SQLException e) {
+			result = false;
+		}	
+		return result;
 	}
 	
 	public static ResultSet executeQuery(String sql) {

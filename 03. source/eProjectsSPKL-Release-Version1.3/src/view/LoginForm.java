@@ -101,6 +101,7 @@ public class LoginForm extends JFrame{
 		constraintsPnLogin.insets = new Insets(20, 0, 0, 0);
 		btSubmit.setPreferredSize(new Dimension(100, 40));
 		btSubmit.setIcon(new ImageIcon(getClass().getResource("/images/submit.png")));
+		btSubmit.setEnabled(false);
 		btSubmit.setText("Submit");
 		pnLogin.add(btSubmit,constraintsPnLogin);
 
