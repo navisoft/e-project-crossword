@@ -86,9 +86,11 @@ GO
 /* ---------------------------------------------------------------------- */
 
 CREATE TABLE [hightscore] (
-    [id] INTEGER IDENTITY(1,1) NOT NULL,
+    [highscoreid] INTEGER IDENTITY(1,1) NOT NULL,
+    [ type]INTEGER  NOT NULL,
     [playername] VARCHAR(40) NOT NULL,
-    [puzzleid] INTEGER NOT NULL,
+    [scores]FLOAT NOT NULL,
+    [times] VARCHAR(5) NOT NULL,
     CONSTRAINT [PK_hightscore] PRIMARY KEY ([id])
 )
 GO
