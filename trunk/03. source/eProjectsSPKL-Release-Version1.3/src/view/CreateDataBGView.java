@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import util.DocumentUtil;
+
 public class CreateDataBGView extends JPanel{
 	/**
 	 * 
@@ -82,7 +84,6 @@ public class CreateDataBGView extends JPanel{
 		bagConstraints.gridy = 1;
 		bagConstraints.gridwidth = 1;
 		bagConstraints.insets = new Insets(10, 0, 10, 0);
-		txtHost.setText("SONLD" );
 		txtHost.setPreferredSize(new Dimension(150, 25));
 		this.add(txtHost,bagConstraints);
 		
@@ -99,8 +100,8 @@ public class CreateDataBGView extends JPanel{
 		bagConstraints.gridy = 2;
 		bagConstraints.gridwidth = 1;
 		bagConstraints.insets = new Insets(10, 0, 10, 0);
-		txtUser.setText("sa");
 		txtUser.setPreferredSize(new Dimension(150, 25));
+		txtUser.setDocument(DocumentUtil.getPlainDocument(40, "[a-z A-Z 0-9]"));
 		this.add(txtUser,bagConstraints);
 		
 		bagConstraints.gridx = 2;
@@ -116,8 +117,8 @@ public class CreateDataBGView extends JPanel{
 		bagConstraints.gridy = 1;
 		bagConstraints.gridwidth = 1;
 		bagConstraints.insets = new Insets(10, 0, 10, 0);
-		txtData.setText("CROSSWORD" );
 		txtData.setPreferredSize(new Dimension(150, 25));
+		txtData.setDocument(DocumentUtil.getPlainDocument(40, "[a-z A-Z]"));
 		this.add(txtData,bagConstraints);
 		
 		bagConstraints.gridx = 2;
@@ -133,7 +134,6 @@ public class CreateDataBGView extends JPanel{
 		bagConstraints.gridy = 2;
 		bagConstraints.gridwidth = 1;
 		bagConstraints.insets = new Insets(10, 0, 10, 0);
-		txtPass.setText("123456");
 		txtPass.setPreferredSize(new Dimension(150, 25));
 		this.add(txtPass,bagConstraints);
 		
